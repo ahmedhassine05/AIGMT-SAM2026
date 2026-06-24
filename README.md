@@ -1,5 +1,4 @@
-# GRL AIGMT-SAM2026
-
+# GRL AIGMT
 Transforms a `.xgrl` / TGRL model file into an AI-enabled TGRL specification across three phases:
 Phase 1 — AI Readiness Assessment, Phase 2 — AI Transformation Patterns, Phase 3 — LLM-Based TGRL Transformation.
 
