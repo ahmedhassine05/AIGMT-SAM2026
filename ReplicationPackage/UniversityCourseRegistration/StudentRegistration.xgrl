@@ -1,0 +1,48 @@
+grl Registration {
+ actor Student {
+    name = "Student";
+    goal G1 { name = "Complete Course Registration"; importance = high; decompositionType = and; }
+    softGoal SG1 { name = "Minimize Registration Effort"; }
+
+    task T1 { name = "Search Course Catalog";
+        description = "Browse available courses, sections, and schedules for the upcoming term."; }
+    task T2 { name = "Select Courses";
+        description = "Choose courses based on personal interest, program plan, and schedule preference."; }
+    task T3 { name = "Submit Registration Request";
+        description = "Submit the chosen course list for processing, timed to maximize seat availability."; }
+
+    resource TranscriptRecord { name = "Transcript Record"; }
+
+    G1 decomposedBy T1, T2, T3;
+
+    T1 contributesTo SG1 {help;};
+    T3 contributesTo SG1 {hurt;};
+ }
+
+ actor Registrar {
+    name = "Registrar";
+    goal G2 { name = "Process Registrations"; importance = high; decompositionType = and; }
+    softGoal SG2 { name = "Ensure Academic Integrity"; }
+
+    task T4 { name = "Verify Prerequisite Eligibility";
+        description = "Check that the student has completed the prerequisites required for each requested course."; }
+    task T5 { name = "Resolve Schedule Conflicts";
+        description = "Negotiate exceptions or alternate sections when a student's requested courses conflict."; }
+    task T6 { name = "Approve Final Registration";
+        description = "Issue the official, binding approval that finalizes the student's registration record."; }
+
+    resource PrerequisiteRecords { name = "Prerequisite Records"; }
+    resource SeatAvailabilityData { name = "Seat Availability Data"; }
+
+    G2 decomposedBy T4, T5, T6;
+
+    T4 contributesTo SG2 {help;};
+    T6 contributesTo SG2 {help;};
+
+    T4 dependsOn PrerequisiteRecords;
+ }
+
+ // -- Cross-actor dependencies --
+ Student.T3 dependsOn Registrar.SeatAvailabilityData;
+ Registrar.T4 dependsOn Student.TranscriptRecord;
+}

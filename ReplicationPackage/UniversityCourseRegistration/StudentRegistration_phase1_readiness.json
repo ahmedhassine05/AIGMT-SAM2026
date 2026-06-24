@@ -1,0 +1,346 @@
+{
+  "fileName": "StudentRegistration.xgrl",
+  "generatedAt": "2026-06-24T15:21:57.583855+00:00",
+  "tasks": [
+    {
+      "id": "xg_e_2",
+      "name": "Search Course Catalog",
+      "description": "Browse available courses, sections, and schedules for the upcoming term.",
+      "actor": {
+        "id": "xg_a_0",
+        "name": "Student"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_0",
+          "name": "Complete Course Registration",
+          "type": "Goal"
+        }
+      ],
+      "resources": [],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 5,
+          "justification": "The task involves finding and displaying available courses, sections, and schedules, which can be produced without essential human judgment."
+        },
+        "S": {
+          "score": 4,
+          "justification": "Course catalog data is typically structured with well-defined fields such as course code, title, section, instructor, time, location, and term, though user search queries may vary in format."
+        },
+        "R": {
+          "score": 5,
+          "justification": "Students perform this task repeatedly and consistently each registration period, and the workflow is largely the same across instances."
+        },
+        "D": {
+          "score": 5,
+          "justification": "The task is well suited to retrieval-oriented AI techniques, including keyword search, semantic search, and filtering, with limited need for tacit domain judgment."
+        },
+        "C": {
+          "score": 1,
+          "justification": "Using AI to search or browse course catalog information has minimal regulatory or legal constraints, assuming it retrieves official catalog data accurately."
+        },
+        "ars": 4.75,
+        "level": "High",
+        "capability": {
+          "category": "Retrieval",
+          "confidence": 95,
+          "justification": "The core function is locating and returning relevant course, section, and schedule information from a catalog."
+        },
+        "eligibility": "carry_forward",
+        "validation": null,
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_3",
+      "name": "Select Courses",
+      "description": "Choose courses based on personal interest, program plan, and schedule preference.",
+      "actor": {
+        "id": "xg_a_0",
+        "name": "Student"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_0",
+          "name": "Complete Course Registration",
+          "type": "Goal"
+        }
+      ],
+      "resources": [],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 3,
+          "justification": "AI can generate suitable course options using program requirements, schedules, and stated preferences, but the final choice depends on personal interests, priorities, and trade-offs that require student judgment."
+        },
+        "S": {
+          "score": 3,
+          "justification": "Course catalogs, program plans, prerequisites, and schedules are typically structured, but personal interests and preferences may be incomplete, subjective, or inconsistently expressed."
+        },
+        "R": {
+          "score": 5,
+          "justification": "Course selection is performed regularly by many students each registration period using similar types of inputs and constraints."
+        },
+        "D": {
+          "score": 4,
+          "justification": "The task fits recommendation and constraint-matching techniques well, especially for aligning requirements, availability, and preferences, though subjective preference interpretation remains partly human-centered."
+        },
+        "C": {
+          "score": 2,
+          "justification": "AI use would generally be acceptable as an advisory aid, with minor policy or accuracy considerations; final enrollment decisions may need student confirmation but are not heavily legally restricted."
+        },
+        "ars": 3.75,
+        "level": "Medium",
+        "capability": {
+          "category": "Recommendation",
+          "confidence": 95,
+          "justification": "The task primarily involves suggesting appropriate courses based on interests, degree requirements, and schedule preferences."
+        },
+        "eligibility": "carry_forward",
+        "validation": null,
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_4",
+      "name": "Submit Registration Request",
+      "description": "Submit the chosen course list for processing, timed to maximize seat availability.",
+      "actor": {
+        "id": "xg_a_0",
+        "name": "Student"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_0",
+          "name": "Complete Course Registration",
+          "type": "Goal"
+        }
+      ],
+      "resources": [
+        {
+          "id": "xg_e_12",
+          "name": "Seat Availability Data",
+          "relation": "Dependency",
+          "direction": "outgoing"
+        }
+      ],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 4,
+          "justification": "Given a chosen course list, the submission timing and execution can largely be automated using seat availability data, though final authorization may still need to remain with the student."
+        },
+        "S": {
+          "score": 4,
+          "justification": "Inputs such as course identifiers, selected course lists, registration windows, and seat availability data are typically structured and consistently formatted."
+        },
+        "R": {
+          "score": 4,
+          "justification": "Course registration submission is performed repeatedly across students and registration periods with a fairly consistent process."
+        },
+        "D": {
+          "score": 4,
+          "justification": "The reasoning mainly involves estimating or optimizing submission timing based on seat availability, which aligns well with predictive or optimization-oriented AI techniques."
+        },
+        "C": {
+          "score": 3,
+          "justification": "AI-assisted submission may require student approval, authentication safeguards, and compliance with institutional registration policies, but it is not inherently prohibited."
+        },
+        "ars": 4.0,
+        "level": "High",
+        "capability": {
+          "category": "Prediction",
+          "confidence": 78,
+          "justification": "The AI-relevant aspect is predicting or estimating seat availability over time to determine when submission is most likely to succeed."
+        },
+        "eligibility": "partially_constrained",
+        "validation": {
+          "required": true,
+          "validated": false,
+          "validatedAt": null,
+          "note": ""
+        },
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_8",
+      "name": "Verify Prerequisite Eligibility",
+      "description": "Check that the student has completed the prerequisites required for each requested course.",
+      "actor": {
+        "id": "xg_a_1",
+        "name": "Registrar"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_6",
+          "name": "Process Registrations",
+          "type": "Goal"
+        }
+      ],
+      "resources": [
+        {
+          "id": "xg_e_11",
+          "name": "Prerequisite Records",
+          "relation": "Dependency",
+          "direction": "outgoing"
+        },
+        {
+          "id": "xg_e_5",
+          "name": "Transcript Record",
+          "relation": "Dependency",
+          "direction": "outgoing"
+        }
+      ],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 4,
+          "justification": "Eligibility can largely be determined automatically by comparing completed courses against prerequisite rules, though exceptions such as waivers, transfer equivalencies, or special approvals may require human handling."
+        },
+        "S": {
+          "score": 4,
+          "justification": "Transcript records and prerequisite records are typically structured institutional data, but prerequisite conditions may include variations such as minimum grades, course alternatives, or equivalencies."
+        },
+        "R": {
+          "score": 5,
+          "justification": "The task is performed routinely and consistently for many student-course registration requests using the same general eligibility logic."
+        },
+        "D": {
+          "score": 4,
+          "justification": "The task fits well with rule-based or analytical reasoning approaches because it involves checking structured facts against defined prerequisite conditions rather than relying on tacit judgment."
+        },
+        "C": {
+          "score": 3,
+          "justification": "Use of AI involves student academic records and registration decisions, so privacy, auditability, validation, and potential human review or appeal mechanisms are likely required, but AI use is not inherently prohibited."
+        },
+        "ars": 4.25,
+        "level": "High",
+        "capability": {
+          "category": "Analytical Reasoning",
+          "confidence": 88,
+          "justification": "The task primarily requires applying prerequisite rules to transcript evidence to determine whether eligibility conditions are satisfied."
+        },
+        "eligibility": "partially_constrained",
+        "validation": {
+          "required": true,
+          "validated": false,
+          "validatedAt": null,
+          "note": ""
+        },
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_9",
+      "name": "Resolve Schedule Conflicts",
+      "description": "Negotiate exceptions or alternate sections when a student's requested courses conflict.",
+      "actor": {
+        "id": "xg_a_1",
+        "name": "Registrar"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_6",
+          "name": "Process Registrations",
+          "type": "Goal"
+        }
+      ],
+      "resources": [],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 2,
+          "justification": "AI can detect conflicts and suggest alternate sections, but negotiating exceptions often requires human judgment, policy interpretation, and coordination with students or departments."
+        },
+        "S": {
+          "score": 3,
+          "justification": "Course schedules, section availability, and registration data are typically structured, but student preferences, exception rationales, and negotiation context may be less consistently formatted."
+        },
+        "R": {
+          "score": 4,
+          "justification": "Schedule conflicts occur regularly during registration and are handled through broadly repeatable processes, though individual cases may vary."
+        },
+        "D": {
+          "score": 3,
+          "justification": "Identifying viable alternatives aligns well with constraint-based recommendation, but exception negotiation may involve tacit institutional knowledge and discretionary judgment."
+        },
+        "C": {
+          "score": 3,
+          "justification": "AI use would likely require human review because decisions affect student enrollment and involve student records, but AI assistance is not inherently prohibited."
+        },
+        "ars": 3.0,
+        "level": "Medium",
+        "capability": {
+          "category": "Recommendation",
+          "confidence": 85,
+          "justification": "The core AI-supported function is recommending alternate sections or possible exception paths when requested courses conflict."
+        },
+        "eligibility": "partially_constrained",
+        "validation": {
+          "required": true,
+          "validated": false,
+          "validatedAt": null,
+          "note": ""
+        },
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_10",
+      "name": "Approve Final Registration",
+      "description": "Issue the official, binding approval that finalizes the student's registration record.",
+      "actor": {
+        "id": "xg_a_1",
+        "name": "Registrar"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_6",
+          "name": "Process Registrations",
+          "type": "Goal"
+        }
+      ],
+      "resources": [],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 2,
+          "justification": "The task produces an official, binding approval, which typically requires accountable human authorization even if AI can assist by checking whether registration conditions appear satisfied."
+        },
+        "S": {
+          "score": 4,
+          "justification": "Registration records are likely maintained in structured institutional systems with well-defined fields and statuses, though the task description does not specify all required inputs."
+        },
+        "R": {
+          "score": 5,
+          "justification": "Final registration approval is a recurring administrative task performed consistently across many student registration instances."
+        },
+        "D": {
+          "score": 3,
+          "justification": "AI or rule-based analytical methods can support eligibility and completeness checks, but the final binding approval involves institutional authority and potential human judgment."
+        },
+        "C": {
+          "score": 3,
+          "justification": "Because the approval finalizes an official student record, human review or authorization is likely required for accountability, auditability, and compliance with institutional governance, though AI use is not necessarily prohibited."
+        },
+        "ars": 3.5,
+        "level": "Medium",
+        "capability": {
+          "category": "Classification",
+          "confidence": 75,
+          "justification": "The AI-relevant aspect of the task is determining whether a registration record should be classified as approved/finalized or not, based on applicable criteria."
+        },
+        "eligibility": "partially_constrained",
+        "validation": {
+          "required": true,
+          "validated": false,
+          "validatedAt": null,
+          "note": ""
+        },
+        "error": null
+      }
+    }
+  ]
+}

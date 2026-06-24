@@ -1,0 +1,113 @@
+{
+  "fileName": "Insurance.xgrl",
+  "generatedAt": "2026-06-24T14:02:45.275816+00:00",
+  "transformations": [
+    {
+      "taskId": "xg_e_4",
+      "taskName": "Validate Claim",
+      "pattern": "P4",
+      "requiresValidation": true,
+      "aiTask": {
+        "name": "AI-Assisted Claim Validation",
+        "description": "Use an AI classification model to assess submitted insurance claims for completeness, consistency, and eligibility for review, flagging claims as valid, incomplete, inconsistent, or potentially ineligible for follow-up by the Claims Officer."
+      },
+      "resources": [
+        {
+          "name": "Claim Validation Classification Model",
+          "description": "A trained AI model that classifies submitted claims based on completeness, consistency, and eligibility indicators."
+        },
+        {
+          "name": "Claim Validation Criteria Dataset",
+          "description": "Structured validation criteria, eligibility rules, and labeled historical claim examples used to train, configure, or evaluate the AI classification model."
+        }
+      ],
+      "resourceMapping": [],
+      "governance": [
+        {
+          "requirement": "Fairness",
+          "justification": "The AI classification of claims must avoid unfairly flagging or rejecting claims based on protected or irrelevant claimant characteristics."
+        },
+        {
+          "requirement": "Explainability",
+          "justification": "The Claims Officer needs understandable reasons for AI validation outcomes, such as missing information, detected inconsistencies, or eligibility rule matches."
+        }
+      ]
+    },
+    {
+      "taskId": "xg_e_5",
+      "taskName": "Check Policy",
+      "pattern": "P1",
+      "requiresValidation": true,
+      "aiTask": {
+        "name": "AI-Assisted Policy Eligibility Check",
+        "description": "Use AI to analyze the customer's policy information, coverage terms, exclusions, and claim eligibility conditions, producing a recommendation and supporting rationale for the Claims Officer to review and confirm."
+      },
+      "resources": [
+        {
+          "name": "AI Policy Analysis Model",
+          "description": "An AI service trained or configured to interpret policy terms, exclusions, coverage limits, and eligibility rules to support policy-check recommendations."
+        }
+      ],
+      "resourceMapping": [
+        {
+          "resourceId": "xg_e_8",
+          "originalName": "Policy Database",
+          "decision": "retain",
+          "rationale": "The Policy Database remains the authoritative source of policy coverage, exclusions, and eligibility conditions required by the AI-assisted analysis."
+        }
+      ],
+      "governance": [
+        {
+          "requirement": "Explainability",
+          "justification": "The Claims Officer must understand why the AI recommends that a claim is covered, excluded, or ineligible, including references to relevant policy clauses and conditions."
+        },
+        {
+          "requirement": "Accountability",
+          "justification": "Final responsibility for the policy eligibility decision must remain clear, with the Claims Officer reviewing and confirming the AI-supported recommendation."
+        },
+        {
+          "requirement": "Robustness",
+          "justification": "The AI-supported check must reliably handle variations in policy wording, incomplete claim information, and edge cases without producing unsupported eligibility conclusions."
+        }
+      ]
+    },
+    {
+      "taskId": "xg_e_6",
+      "taskName": "Assess Damage",
+      "pattern": "P1",
+      "requiresValidation": true,
+      "aiTask": {
+        "name": "AI-Assisted Damage Assessment",
+        "description": "Use AI to analyze submitted damage photos and related claim evidence to estimate the extent, severity, and likely impact of the reported damage, while the Claims Officer reviews the AI-generated assessment, validates the findings, and makes the final determination."
+      },
+      "resources": [
+        {
+          "name": "AI Damage Assessment Model",
+          "description": "A trained analytical model capable of interpreting damage evidence, identifying visible damage indicators, estimating severity, and producing an assessment with confidence levels and supporting rationale."
+        }
+      ],
+      "resourceMapping": [
+        {
+          "resourceId": "xg_e_9",
+          "originalName": "Damage Photos",
+          "decision": "retain",
+          "rationale": "Damage photos remain essential input evidence for both the AI analysis and the Claims Officer's review; the AI augments assessment but does not eliminate the need for original visual evidence."
+        }
+      ],
+      "governance": [
+        {
+          "requirement": "Explainability",
+          "justification": "The AI-assisted assessment should provide reasons for damage severity estimates, highlight relevant visual evidence, and expose confidence levels so the Claims Officer can understand and challenge the recommendation."
+        },
+        {
+          "requirement": "Accountability",
+          "justification": "The Claims Officer must remain responsible for reviewing the AI output, resolving uncertainties, documenting the final assessment, and ensuring that claim decisions are not delegated solely to the AI."
+        },
+        {
+          "requirement": "Robustness",
+          "justification": "The AI must handle varying photo quality, incomplete evidence, unusual damage patterns, and uncertainty without producing unreliable assessments; low-confidence or ambiguous cases should be flagged for closer human review."
+        }
+      ]
+    }
+  ]
+}

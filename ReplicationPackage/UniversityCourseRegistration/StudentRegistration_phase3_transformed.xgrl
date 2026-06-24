@@ -1,0 +1,115 @@
+grl Registration {
+ actor Student {
+    name = "Student";
+    goal G1 { name = "Complete Course Registration"; importance = high; decompositionType = and; }
+    softGoal SG1 { name = "Minimize Registration Effort"; }
+
+    softGoal SG_Privacy_Student { name = "Privacy"; }
+    softGoal SG_Explainability_Student { name = "Explainability"; }
+    softGoal SG_Robustness_Student { name = "Robustness"; }
+    softGoal SG_Fairness_Student { name = "Fairness"; }
+
+    task T1 { name = "AI-Assisted Course Catalog Search";
+        description = "Use an AI-assisted retrieval interface to help the Student find relevant courses, sections, and schedules for the upcoming term through natural-language queries, semantic matching, filters, and ranked results based on catalog data and stated search criteria."; }
+    task T2 { name = "Recommend Courses";
+        description = "Use an AI recommendation capability to suggest suitable courses for the student based on personal interests, program requirements, academic history, prerequisites, timetable constraints, and schedule preferences, replacing reliance on predefined business rules with personalized predictions and ranked recommendations."; }
+    task T3 { name = "AI-Assisted Registration Submission Timing";
+        description = "Use predictive recommendations to determine when to submit the student's chosen course list for processing, based on current seat availability and expected near-term changes, in order to improve the likelihood of successful enrollment."; }
+
+    resource TranscriptRecord { name = "Transcript Record"; }
+    resource AISearchableCourseCatalogIndex { name = "AI-Searchable Course Catalog Index";
+        description = "A structured and semantically indexed representation of upcoming-term courses, sections, prerequisites, meeting times, instructors, modalities, availability, and schedule attributes used by the AI retrieval capability."; }
+    resource StudentAcademicAndPreferenceData { name = "Student Academic and Preference Data";
+        description = "Structured data about the student's program plan, completed courses, academic progress, stated interests, preferred schedule times, workload preferences, and constraints used to personalize recommendations."; }
+    resource CourseCatalogAndScheduleData { name = "Course Catalog and Schedule Data";
+        description = "Current information about available courses, prerequisites, program requirements, sections, meeting times, capacities, and timetable conflicts required to generate valid course recommendations."; }
+    resource CourseRecommendationModel { name = "Course Recommendation Model";
+        description = "An AI model that ranks and recommends courses by predicting suitability for the student given academic requirements, interests, and scheduling preferences."; }
+    resource SeatAvailabilityPredictionModel { name = "Seat Availability Prediction Model";
+        description = "A trained prediction model that estimates short-term seat availability and enrollment likelihood for the student's selected courses."; }
+    resource HistoricalRegistrationDemandData { name = "Historical Registration Demand Data";
+        description = "Historical course registration, waitlist, cancellation, and seat-fill patterns used to train or calibrate predictions about course availability."; }
+
+    G1 decomposedBy T1, T2, T3;
+
+    T1 dependsOn AISearchableCourseCatalogIndex;
+    T2 dependsOn StudentAcademicAndPreferenceData;
+    T2 dependsOn CourseCatalogAndScheduleData;
+    T2 dependsOn CourseRecommendationModel;
+    T3 dependsOn SeatAvailabilityPredictionModel;
+    T3 dependsOn HistoricalRegistrationDemandData;
+
+    T1 contributesTo SG1 {help;};
+    T3 contributesTo SG1 {hurt;};
+
+    T1 contributesTo SG_Privacy_Student {hurt;}; // Justification: The AI-assisted search may use student queries, preferences, prior search behavior, or academic context, creating privacy risks for personal and educational information.
+    T1 contributesTo SG_Explainability_Student {hurt;}; // Justification: Semantic matching and ranked results may make it difficult for the Student to understand why particular courses or sections are retrieved or highlighted.
+    T1 contributesTo SG_Robustness_Student {hurt;}; // Justification: Ambiguous queries, changing section availability, and terminology variation may reduce the reliability of AI-assisted catalog results.
+
+    T2 contributesTo SG_Fairness_Student {hurt;}; // Justification: Personalized recommendations may disadvantage students if irrelevant or protected characteristics influence ranking or access to suitable course options.
+    T2 contributesTo SG_Explainability_Student {hurt;}; // Justification: AI-ranked recommendations may be difficult for students to understand without clear reasons tied to requirements, interests, prerequisites, or schedule preferences.
+    T2 contributesTo SG_Robustness_Student {hurt;}; // Justification: Incomplete, changing, or conflicting course and schedule data may lead to invalid recommendations such as unmet prerequisites or timetable conflicts.
+
+    T3 contributesTo SG_Fairness_Student {hurt;}; // Justification: Predictive submission timing may systematically advantage or disadvantage students if recommendations reflect inappropriate factors or unequal access patterns.
+    T3 contributesTo SG_Explainability_Student {hurt;}; // Justification: The Student may not understand why a particular submission time is recommended without clear reasoning about projected seat loss risk or availability changes.
+    T3 contributesTo SG_Robustness_Student {hurt;}; // Justification: Rapidly changing seat availability, stale data, registration surges, and system latency may make timing predictions unreliable.
+ }
+
+ actor Registrar {
+    name = "Registrar";
+    goal G2 { name = "Process Registrations"; importance = high; decompositionType = and; }
+    softGoal SG2 { name = "Ensure Academic Integrity"; }
+
+    softGoal SG_Explainability_Registrar { name = "Explainability"; }
+    softGoal SG_Accountability_Registrar { name = "Accountability"; }
+    softGoal SG_Robustness_Registrar { name = "Robustness"; }
+    softGoal SG_Fairness_Registrar { name = "Fairness"; }
+
+    task T4 { name = "AI-Assisted Prerequisite Eligibility Verification";
+        description = "Use AI to analyze each student's transcript record against the prerequisite records for requested courses, identify whether prerequisite requirements appear satisfied, flag missing or ambiguous prerequisites, and provide a rationale to support Registrar review within the registration process."; }
+    task T5 { name = "Recommend Schedule Conflict Resolutions";
+        description = "Use AI-based recommendation to analyze a student's requested courses, schedule constraints, enrollment availability, program requirements, and historical resolution patterns, then recommend alternate sections, course substitutions, or exception options for Registrar review and action."; }
+    task T6 { name = "AI-Based Final Registration Approval Classification";
+        description = "Use an AI classification system to assess each completed student registration record and classify it as eligible for final approval or requiring exception handling, thereby supporting issuance of the official, binding registration approval."; }
+
+    resource PrerequisiteRecords { name = "Prerequisite Records"; }
+    resource SeatAvailabilityData { name = "Seat Availability Data"; }
+    resource PrerequisiteEligibilityAnalysisModel { name = "Prerequisite Eligibility Analysis Model";
+        description = "An AI-enabled analysis capability that compares transcript evidence with course prerequisite requirements and produces eligibility findings, confidence indicators, and supporting rationale."; }
+    resource CourseScheduleAndEnrollmentAvailabilityData { name = "Course Schedule and Enrollment Availability Data";
+        description = "Current data on course sections, meeting times, capacities, waitlists, prerequisites, and enrollment restrictions needed to identify feasible alternate schedules."; }
+    resource StudentAcademicProfileData { name = "Student Academic Profile Data";
+        description = "Student-specific program requirements, completed coursework, academic standing, registration priorities, and requested courses needed to generate context-appropriate conflict resolution recommendations."; }
+    resource HistoricalConflictResolutionData { name = "Historical Conflict Resolution Data";
+        description = "Past schedule conflict cases and outcomes used to support recommendation quality by identifying effective exceptions, substitutions, and alternate section patterns."; }
+    resource FinalRegistrationApprovalClassificationModel { name = "Final Registration Approval Classification Model";
+        description = "A trained AI classification model that evaluates registration record attributes, eligibility conditions, and completion status to determine whether the registration should be approved or flagged for further review."; }
+
+    G2 decomposedBy T4, T5, T6;
+
+    T4 contributesTo SG2 {help;};
+    T6 contributesTo SG2 {help;};
+
+    T4 dependsOn PrerequisiteRecords;
+    T4 dependsOn PrerequisiteEligibilityAnalysisModel;
+    T5 dependsOn CourseScheduleAndEnrollmentAvailabilityData;
+    T5 dependsOn StudentAcademicProfileData;
+    T5 dependsOn HistoricalConflictResolutionData;
+    T6 dependsOn FinalRegistrationApprovalClassificationModel;
+
+    T4 contributesTo SG_Explainability_Registrar {help;}; // Justification: The AI-assisted verification produces eligibility findings with supporting rationale that can explain which transcript entries satisfy or fail to satisfy prerequisite requirements.
+    T4 contributesTo SG_Accountability_Registrar {hurt;}; // Justification: AI involvement in eligibility verification may blur responsibility unless Registrar review and resolution of ambiguous or contested cases remain clear.
+    T4 contributesTo SG_Robustness_Registrar {hurt;}; // Justification: Variations in transcript formats, course equivalencies, transfer credits, and incomplete data may cause incorrect eligibility determinations.
+
+    T5 contributesTo SG_Fairness_Registrar {hurt;}; // Justification: Conflict-resolution recommendations may systematically disadvantage students based on protected or sensitive characteristics, registration status, program, or historical inequities.
+    T5 contributesTo SG_Explainability_Registrar {hurt;}; // Justification: Recommended alternate sections, exceptions, or substitutions may be difficult for the Registrar to validate and communicate without understandable reasons.
+    T5 contributesTo SG_Robustness_Registrar {hurt;}; // Justification: Changing availability, incomplete data, and interacting constraints may cause the AI to suggest infeasible or invalid schedule resolutions.
+
+    T6 contributesTo SG_Fairness_Registrar {hurt;}; // Justification: AI classification for final approval may produce discriminatory or inconsistent approval outcomes across student groups if not controlled.
+    T6 contributesTo SG_Explainability_Registrar {hurt;}; // Justification: A binding approval or exception classification may be opaque without understandable reasons supporting accountability and review.
+ }
+
+ // -- Cross-actor dependencies --
+ Student.T3 dependsOn Registrar.SeatAvailabilityData;
+ Registrar.T4 dependsOn Student.TranscriptRecord;
+}

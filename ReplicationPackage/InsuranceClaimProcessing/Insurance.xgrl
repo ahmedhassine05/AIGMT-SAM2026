@@ -1,0 +1,72 @@
+grl Insurance {
+ comment "A GRL model for an insurance claims officer handling claim intake, validation, assessment, and decision-making.";
+
+ actor ClaimsOfficer {
+    name = "Claims Officer"; description = "Responsible for reviewing and processing insurance claims while balancing accuracy, speed, and customer satisfaction.";
+
+    // ------- Goal -------
+    goal G1 {
+        name = "Process Insurance Claims";
+        description = "Handle incoming claims from initial validation to final decision in a reliable and efficient way.";
+        importance = high; decompositionType = and;
+    }
+    // ------- SoftGoals -------
+    softGoal SG1 {
+        name = "Ensure Accuracy";
+        description = "Minimize errors in claim verification, assessment, and outcome determination.";
+    }
+    softGoal SG2 {
+        name = "Reduce Processing Time";
+        description = "Complete claim processing as quickly as possible without compromising quality.";
+    }
+    softGoal SG3 {
+        name = "Maintain Customer Satisfaction";
+        description = "Provide a smooth and transparent claims experience that meets customer expectations.";
+        importance = 100;
+    }
+
+    // ------- Tasks -------
+    task T1 {
+        name = "Validate Claim";
+        description = "Check that the submitted claim is complete, consistent, and eligible for review.";
+    }
+    task T2 {
+        name = "Check Policy";
+        description = "Verify the customer's policy coverage, exclusions, and claim eligibility conditions.";
+    }
+    task T3 {
+        name = "Assess Damage";
+        description = "Review evidence and estimate the extent and impact of the reported damage.";
+    }
+    task T4 {
+        name = "Determine Claim Outcome";
+        description = "Decide whether the claim should be approved, rejected, or escalated for further review.";
+    }
+
+    // ------- Resources -------
+    resource R1 {
+        name = "Policy Database";
+        description = "Repository containing policy details, coverage information, and contractual conditions.";
+    }
+    resource R2 {
+        name = "Damage Photos";
+        description = "Visual evidence submitted by the customer or adjuster to support damage assessment.";
+    }
+
+    // ------- Decompositions -------
+    G1 decomposedBy T1, T2, T3, T4;
+
+    // ------- Contributions -------
+    T1 contributesTo SG1 {help;};
+    T2 contributesTo SG1 {help;};
+    T3 contributesTo SG1 {help;};
+    T2 contributesTo SG2 {hurt;};
+    T3 contributesTo SG2 {help;};
+    SG1 contributesTo SG3 {help;};
+    SG2 contributesTo SG3 {help;};
+
+    // ------- Dependencies -------
+    T2 dependsOn R1;
+    T3 dependsOn R2;
+ }
+}

@@ -1,0 +1,83 @@
+grl Triage {
+ actor Patient {
+    name = "Patient";
+    goal G1 { name = "Complete Intake Process"; importance = high; decompositionType = and; }
+    softGoal SG1 { name = "Minimize Wait Time"; }
+
+    goal G1a { name = "Provide Health Information"; decompositionType = and; }
+    goal G1b { name = "Choose Check-in Method"; decompositionType = or; }
+
+    task T1 { name = "Fill Symptom Questionnaire";
+        description = "Report current symptoms, duration, and severity through a structured form."; }
+    task T2 { name = "Upload Insurance Documents";
+        description = "Submit insurance card and identification documents for verification."; }
+    task T3 { name = "Check In via Kiosk";
+        description = "Complete self-service check-in using the lobby kiosk."; }
+    task T4 { name = "Check In via Front Desk Staff";
+        description = "Complete check-in with the assistance of front desk personnel."; }
+
+    resource SymptomData { name = "Symptom Data"; }
+    resource PatientContactInfo { name = "Patient Contact Info"; }
+
+    G1 decomposedBy G1a, G1b;
+    G1a decomposedBy T1, T2;
+    G1b decomposedBy T3, T4;
+
+    T1 contributesTo SG1 {hurt;};
+    T3 contributesTo SG1 {help;};
+ }
+
+ actor TriageNurse {
+    name = "Triage Nurse";
+    goal G2 { name = "Determine Patient Priority"; importance = high; decompositionType = and; }
+    softGoal SG2 { name = "Ensure Patient Safety"; }
+
+    task T5 { name = "Review Symptom Questionnaire";
+        description = "Read and summarize the patient's reported symptoms."; }
+    task T6 { name = "Measure Vital Signs";
+        description = "Record blood pressure, heart rate, temperature, and oxygen saturation."; }
+    task T7 { name = "Assign Triage Level";
+        description = "Determine the patient's acuity level based on symptoms and vital signs."; }
+
+    resource VitalSignsRecord { name = "Vital Signs Record"; }
+    resource TriageAssessment { name = "Triage Assessment"; }
+
+    G2 decomposedBy T5, T6, T7;
+
+    T7 contributesTo SG2 {help;};
+
+    T7 dependsOn VitalSignsRecord;
+ }
+
+ actor CareCoordinator {
+    name = "Care Coordinator";
+    goal G3 { name = "Assign Patient to Care Pathway"; importance = high; decompositionType = and; }
+    softGoal SG3 { name = "Optimize Resource Utilization"; }
+
+    goal G3a { name = "Determine Care Pathway"; decompositionType = or; }
+
+    task T8 { name = "Route to Emergency Department";
+        description = "Direct the patient immediately to emergency care."; }
+    task T9 { name = "Route to Urgent Care Queue";
+        description = "Place the patient in the urgent care queue."; }
+    task T10 { name = "Schedule Routine Appointment";
+        description = "Book a routine follow-up appointment for non-urgent cases."; }
+    task T11 { name = "Notify Patient of Assignment";
+        description = "Inform the patient of their assigned care pathway and expected wait."; }
+
+    resource CarePathwayDecision { name = "Care Pathway Decision"; }
+
+    G3 decomposedBy G3a, T11;
+    G3a decomposedBy T8, T9, T10;
+
+    T9 contributesTo SG3 {help;};
+    T10 contributesTo SG3 {help;};
+
+    T11 dependsOn CarePathwayDecision;
+ }
+
+ // -- Cross-actor dependencies (qualified by owning actor) --
+ TriageNurse.T5 dependsOn Patient.SymptomData;
+ CareCoordinator.T9 dependsOn TriageNurse.TriageAssessment;
+ CareCoordinator.T11 dependsOn Patient.PatientContactInfo;
+}

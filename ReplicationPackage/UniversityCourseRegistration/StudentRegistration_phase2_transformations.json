@@ -1,0 +1,228 @@
+{
+  "fileName": "StudentRegistration.xgrl",
+  "generatedAt": "2026-06-24T15:23:02.450283+00:00",
+  "transformations": [
+    {
+      "taskId": "xg_e_2",
+      "taskName": "Search Course Catalog",
+      "pattern": "P3",
+      "requiresValidation": false,
+      "aiTask": {
+        "name": "AI-Assisted Course Catalog Search",
+        "description": "Use an AI-assisted retrieval interface to help the Student find relevant courses, sections, and schedules for the upcoming term through natural-language queries, semantic matching, filters, and ranked results based on catalog data and stated search criteria."
+      },
+      "resources": [
+        {
+          "name": "AI-Searchable Course Catalog Index",
+          "description": "A structured and semantically indexed representation of upcoming-term courses, sections, prerequisites, meeting times, instructors, modalities, availability, and schedule attributes used by the AI retrieval capability."
+        }
+      ],
+      "resourceMapping": [],
+      "governance": [
+        {
+          "requirement": "Privacy",
+          "justification": "The AI-assisted search may use student queries, preferences, prior search behavior, or academic context, so personal and educational information must be protected and minimized."
+        },
+        {
+          "requirement": "Explainability",
+          "justification": "The Student should be able to understand why particular courses or sections are retrieved, ranked, or highlighted, especially when results are based on semantic matching or inferred preferences."
+        },
+        {
+          "requirement": "Robustness",
+          "justification": "The retrieval function must provide accurate, current, and reliable catalog results despite ambiguous queries, changing section availability, and variations in course descriptions or terminology."
+        }
+      ]
+    },
+    {
+      "taskId": "xg_e_3",
+      "taskName": "Select Courses",
+      "pattern": "P2",
+      "requiresValidation": false,
+      "aiTask": {
+        "name": "Recommend Courses",
+        "description": "Use an AI recommendation capability to suggest suitable courses for the student based on personal interests, program requirements, academic history, prerequisites, timetable constraints, and schedule preferences, replacing reliance on predefined business rules with personalized predictions and ranked recommendations."
+      },
+      "resources": [
+        {
+          "name": "Student Academic and Preference Data",
+          "description": "Structured data about the student's program plan, completed courses, academic progress, stated interests, preferred schedule times, workload preferences, and constraints used to personalize recommendations."
+        },
+        {
+          "name": "Course Catalog and Schedule Data",
+          "description": "Current information about available courses, prerequisites, program requirements, sections, meeting times, capacities, and timetable conflicts required to generate valid course recommendations."
+        },
+        {
+          "name": "Course Recommendation Model",
+          "description": "An AI model that ranks and recommends courses by predicting suitability for the student given academic requirements, interests, and scheduling preferences."
+        }
+      ],
+      "resourceMapping": [],
+      "governance": [
+        {
+          "requirement": "Fairness",
+          "justification": "Recommendations should not disadvantage students based on irrelevant or protected characteristics and should provide equitable access to suitable course options across different programs, backgrounds, and academic pathways."
+        },
+        {
+          "requirement": "Explainability",
+          "justification": "Students should be able to understand why specific courses are recommended, such as alignment with program requirements, interests, prerequisites, or schedule preferences."
+        },
+        {
+          "requirement": "Robustness",
+          "justification": "The recommendation task must handle incomplete, changing, or conflicting course and schedule data while avoiding invalid recommendations such as courses with unmet prerequisites or timetable conflicts."
+        }
+      ]
+    },
+    {
+      "taskId": "xg_e_4",
+      "taskName": "Submit Registration Request",
+      "pattern": "P2",
+      "requiresValidation": true,
+      "aiTask": {
+        "name": "AI-Assisted Registration Submission Timing",
+        "description": "Use predictive recommendations to determine when to submit the student's chosen course list for processing, based on current seat availability and expected near-term changes, in order to improve the likelihood of successful enrollment."
+      },
+      "resources": [
+        {
+          "name": "Seat Availability Prediction Model",
+          "description": "A trained prediction model that estimates short-term seat availability and enrollment likelihood for the student's selected courses."
+        },
+        {
+          "name": "Historical Registration Demand Data",
+          "description": "Historical course registration, waitlist, cancellation, and seat-fill patterns used to train or calibrate predictions about course availability."
+        }
+      ],
+      "resourceMapping": [
+        {
+          "resourceId": "xg_e_12",
+          "originalName": "Seat Availability Data",
+          "decision": "retain",
+          "rationale": "Current seat availability remains essential input for the prediction model and for validating whether a recommended submission time is still actionable."
+        }
+      ],
+      "governance": [
+        {
+          "requirement": "Fairness",
+          "justification": "Recommendations should not systematically advantage or disadvantage students based on inappropriate factors or unequal access patterns."
+        },
+        {
+          "requirement": "Explainability",
+          "justification": "The student should be able to understand why a particular submission time is recommended, such as projected seat loss risk or expected availability changes."
+        },
+        {
+          "requirement": "Robustness",
+          "justification": "Predictions must remain reliable under rapidly changing seat availability, stale data, registration surges, or system latency."
+        }
+      ]
+    },
+    {
+      "taskId": "xg_e_8",
+      "taskName": "Verify Prerequisite Eligibility",
+      "pattern": "P1",
+      "requiresValidation": true,
+      "aiTask": {
+        "name": "AI-Assisted Prerequisite Eligibility Verification",
+        "description": "Use AI to analyze each student's transcript record against the prerequisite records for requested courses, identify whether prerequisite requirements appear satisfied, flag missing or ambiguous prerequisites, and provide a rationale to support Registrar review within the registration process."
+      },
+      "resources": [
+        {
+          "name": "Prerequisite Eligibility Analysis Model",
+          "description": "An AI-enabled analysis capability that compares transcript evidence with course prerequisite requirements and produces eligibility findings, confidence indicators, and supporting rationale."
+        }
+      ],
+      "resourceMapping": [
+        {
+          "resourceId": "xg_e_11",
+          "originalName": "Prerequisite Records",
+          "decision": "retain",
+          "rationale": "Prerequisite Records remain the authoritative source of course prerequisite requirements and are required as input for the AI-assisted eligibility analysis."
+        },
+        {
+          "resourceId": "xg_e_5",
+          "originalName": "Transcript Record",
+          "decision": "retain",
+          "rationale": "Transcript Record remains the authoritative source of completed student coursework and academic history needed to verify prerequisite completion."
+        }
+      ],
+      "governance": [
+        {
+          "requirement": "Explainability",
+          "justification": "The AI-assisted task must provide understandable reasons for each eligibility finding, including which transcript entries satisfy or fail to satisfy specific prerequisite requirements."
+        },
+        {
+          "requirement": "Accountability",
+          "justification": "Eligibility verification affects student registration outcomes, so responsibility for reviewing AI outputs and resolving ambiguous or contested cases must remain clear."
+        },
+        {
+          "requirement": "Robustness",
+          "justification": "The AI analysis must handle variations in transcript formats, course equivalencies, transfer credits, and incomplete data reliably to avoid incorrect eligibility determinations."
+        }
+      ]
+    },
+    {
+      "taskId": "xg_e_9",
+      "taskName": "Resolve Schedule Conflicts",
+      "pattern": "P2",
+      "requiresValidation": true,
+      "aiTask": {
+        "name": "Recommend Schedule Conflict Resolutions",
+        "description": "Use AI-based recommendation to analyze a student's requested courses, schedule constraints, enrollment availability, program requirements, and historical resolution patterns, then recommend alternate sections, course substitutions, or exception options for Registrar review and action."
+      },
+      "resources": [
+        {
+          "name": "Course Schedule and Enrollment Availability Data",
+          "description": "Current data on course sections, meeting times, capacities, waitlists, prerequisites, and enrollment restrictions needed to identify feasible alternate schedules."
+        },
+        {
+          "name": "Student Academic Profile Data",
+          "description": "Student-specific program requirements, completed coursework, academic standing, registration priorities, and requested courses needed to generate context-appropriate conflict resolution recommendations."
+        },
+        {
+          "name": "Historical Conflict Resolution Data",
+          "description": "Past schedule conflict cases and outcomes used to support recommendation quality by identifying effective exceptions, substitutions, and alternate section patterns."
+        }
+      ],
+      "resourceMapping": [],
+      "governance": [
+        {
+          "requirement": "Fairness",
+          "justification": "Recommendations should not systematically disadvantage students based on protected or sensitive characteristics, registration status, program, or historical inequities in access to high-demand sections."
+        },
+        {
+          "requirement": "Explainability",
+          "justification": "The Registrar needs understandable reasons for each recommended alternate section, exception, or substitution to validate the recommendation and communicate the decision to students."
+        },
+        {
+          "requirement": "Robustness",
+          "justification": "The recommendation must remain reliable when course availability changes, data is incomplete, or multiple constraints interact, and should avoid suggesting infeasible or invalid schedule resolutions."
+        }
+      ]
+    },
+    {
+      "taskId": "xg_e_10",
+      "taskName": "Approve Final Registration",
+      "pattern": "P4",
+      "requiresValidation": true,
+      "aiTask": {
+        "name": "AI-Based Final Registration Approval Classification",
+        "description": "Use an AI classification system to assess each completed student registration record and classify it as eligible for final approval or requiring exception handling, thereby supporting issuance of the official, binding registration approval."
+      },
+      "resources": [
+        {
+          "name": "Final Registration Approval Classification Model",
+          "description": "A trained AI classification model that evaluates registration record attributes, eligibility conditions, and completion status to determine whether the registration should be approved or flagged for further review."
+        }
+      ],
+      "resourceMapping": [],
+      "governance": [
+        {
+          "requirement": "Fairness",
+          "justification": "The classification must avoid discriminatory approval outcomes across student groups and ensure that equivalent registration records are treated consistently."
+        },
+        {
+          "requirement": "Explainability",
+          "justification": "Because the task results in an official, binding approval decision, the system must provide understandable reasons for approval or exception classification to support accountability and review."
+        }
+      ]
+    }
+  ]
+}

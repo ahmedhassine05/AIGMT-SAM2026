@@ -1,0 +1,131 @@
+grl Insurance {
+ comment "A GRL model for an insurance claims officer handling claim intake, validation, assessment, and decision-making, transformed with AI-enabled task support and governance requirements.";
+
+ actor ClaimsOfficer {
+    name = "Claims Officer"; description = "Responsible for reviewing and processing insurance claims while balancing accuracy, speed, and customer satisfaction.";
+
+    // ------- Goal -------
+    goal G1 {
+        name = "Process Insurance Claims";
+        description = "Handle incoming claims from initial validation to final decision in a reliable and efficient way.";
+        importance = high; decompositionType = and;
+    }
+
+    // ------- SoftGoals -------
+    softGoal SG1 {
+        name = "Ensure Accuracy";
+        description = "Minimize errors in claim verification, assessment, and outcome determination.";
+    }
+    softGoal SG2 {
+        name = "Reduce Processing Time";
+        description = "Complete claim processing as quickly as possible without compromising quality.";
+    }
+    softGoal SG3 {
+        name = "Maintain Customer Satisfaction";
+        description = "Provide a smooth and transparent claims experience that meets customer expectations.";
+        importance = 100;
+    }
+
+    // ------- Governance SoftGoals -------
+    softGoal SG4 {
+        name = "Fairness";
+        description = "Ensure AI-supported claim processing avoids unfair treatment or outcome differences based on protected or irrelevant claimant characteristics.";
+    }
+    softGoal SG5 {
+        name = "Explainability";
+        description = "Ensure AI-supported recommendations and classifications provide understandable reasons, evidence, confidence information, or policy references for Claims Officer review.";
+    }
+    softGoal SG6 {
+        name = "Accountability";
+        description = "Ensure the Claims Officer remains responsible for reviewing AI outputs, confirming recommendations, documenting decisions, and making final claim determinations.";
+    }
+    softGoal SG7 {
+        name = "Robustness";
+        description = "Ensure AI-supported claim processing remains reliable under variations in policy wording, evidence quality, incomplete information, edge cases, and uncertainty.";
+    }
+
+    // ------- AI-Enabled Tasks -------
+    task T1 {
+        name = "AI-Assisted Claim Validation";
+        description = "Use an AI classification model to assess submitted insurance claims for completeness, consistency, and eligibility for review, flagging claims as valid, incomplete, inconsistent, or potentially ineligible for follow-up by the Claims Officer.";
+    }
+    task T2 {
+        name = "AI-Assisted Policy Eligibility Check";
+        description = "Use AI to analyze the customer's policy information, coverage terms, exclusions, and claim eligibility conditions, producing a recommendation and supporting rationale for the Claims Officer to review and confirm.";
+    }
+    task T3 {
+        name = "AI-Assisted Damage Assessment";
+        description = "Use AI to analyze submitted damage photos and related claim evidence to estimate the extent, severity, and likely impact of the reported damage, while the Claims Officer reviews the AI-generated assessment, validates the findings, and makes the final determination.";
+    }
+    task T4 {
+        name = "Determine Claim Outcome";
+        description = "Decide whether the claim should be approved, rejected, or escalated for further review.";
+    }
+
+    // ------- Resources -------
+    resource R1 {
+        name = "Policy Database";
+        description = "Repository containing policy details, coverage information, and contractual conditions.";
+    }
+    resource R2 {
+        name = "Damage Photos";
+        description = "Visual evidence submitted by the customer or adjuster to support damage assessment.";
+    }
+    resource R3 {
+        name = "Claim Validation Classification Model";
+        description = "A trained AI model that classifies submitted claims based on completeness, consistency, and eligibility indicators.";
+    }
+    resource R4 {
+        name = "Claim Validation Criteria Dataset";
+        description = "Structured validation criteria, eligibility rules, and labeled historical claim examples used to train, configure, or evaluate the AI classification model.";
+    }
+    resource R5 {
+        name = "AI Policy Analysis Model";
+        description = "An AI service trained or configured to interpret policy terms, exclusions, coverage limits, and eligibility rules to support policy-check recommendations.";
+    }
+    resource R6 {
+        name = "AI Damage Assessment Model";
+        description = "A trained analytical model capable of interpreting damage evidence, identifying visible damage indicators, estimating severity, and producing an assessment with confidence levels and supporting rationale.";
+    }
+
+    // ------- Decompositions -------
+    G1 decomposedBy T1, T2, T3, T4;
+
+    // ------- Contributions -------
+    T1 contributesTo SG1 {help;};
+    T2 contributesTo SG1 {help;};
+    T3 contributesTo SG1 {help;};
+    T2 contributesTo SG2 {hurt;};
+    T3 contributesTo SG2 {help;};
+    SG1 contributesTo SG3 {help;};
+    SG2 contributesTo SG3 {help;};
+
+    // ------- Governance Contributions -------
+    // Justification: AI claim classification may risk unfair flagging if learned patterns reflect protected or irrelevant claimant characteristics.
+    T1 contributesTo SG4 {hurt;};
+    // Justification: AI validation categories can support follow-up, but classification outcomes may be difficult to understand without clear reasons for missing information, inconsistencies, or eligibility matches.
+    T1 contributesTo SG5 {hurt;};
+
+    // Justification: The AI-assisted policy check produces supporting rationale and can reference policy clauses, helping the Claims Officer understand coverage and exclusion recommendations.
+    T2 contributesTo SG5 {help;};
+    // Justification: The Claims Officer reviews and confirms the AI-supported recommendation, keeping final responsibility with the human decision-maker.
+    T2 contributesTo SG6 {help;};
+    // Justification: Variations in policy wording, incomplete claim information, and edge cases may challenge the reliability of AI-supported eligibility conclusions.
+    T2 contributesTo SG7 {hurt;};
+
+    // Justification: The AI-assisted damage assessment provides confidence levels and supporting rationale, helping the Claims Officer understand and challenge severity estimates.
+    T3 contributesTo SG5 {help;};
+    // Justification: The Claims Officer reviews the AI output, validates findings, resolves uncertainty, and makes the final damage assessment determination.
+    T3 contributesTo SG6 {help;};
+    // Justification: Varying photo quality, incomplete evidence, and unusual damage patterns may reduce the reliability of AI-generated damage assessments.
+    T3 contributesTo SG7 {hurt;};
+
+    // ------- Dependencies -------
+    T1 dependsOn R3;
+    T1 dependsOn R4;
+    T2 dependsOn R1;
+    T2 dependsOn R5;
+    T3 dependsOn R2;
+    T3 dependsOn R6;
+ }
+}

@@ -1,0 +1,235 @@
+{
+  "fileName": "Insurance.xgrl",
+  "generatedAt": "2026-06-24T14:02:17.528614+00:00",
+  "tasks": [
+    {
+      "id": "xg_e_4",
+      "name": "Validate Claim",
+      "description": "Check that the submitted claim is complete, consistent, and eligible for review.",
+      "actor": {
+        "id": "xg_a_0",
+        "name": "Claims Officer"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_0",
+          "name": "Process Insurance Claims",
+          "type": "Goal"
+        }
+      ],
+      "resources": [],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 4,
+          "justification": "Completeness, consistency, and basic eligibility can largely be checked using predefined rules, document extraction, and validation logic, though ambiguous or exceptional claims may still require human judgment."
+        },
+        "S": {
+          "score": 4,
+          "justification": "Insurance claims are typically submitted through structured or semi-structured forms with required fields and supporting documents, although some attachments or explanations may be unstructured."
+        },
+        "R": {
+          "score": 5,
+          "justification": "Claim validation is a recurring, standardized activity performed consistently across many claim instances."
+        },
+        "D": {
+          "score": 4,
+          "justification": "The task fits AI-supported rule checking, classification, and document analysis well, especially for detecting missing information, inconsistencies, and eligibility indicators."
+        },
+        "C": {
+          "score": 3,
+          "justification": "AI use would likely require validation, auditability, and human oversight because errors could affect claim access or fairness, but the task is not inherently prohibited if used to support review."
+        },
+        "ars": 4.25,
+        "level": "High",
+        "capability": {
+          "category": "Classification",
+          "confidence": 85,
+          "justification": "The primary outcome is to classify a submitted claim as complete or incomplete, consistent or inconsistent, and eligible or not eligible for review."
+        },
+        "eligibility": "partially_constrained",
+        "validation": {
+          "required": true,
+          "validated": false,
+          "validatedAt": null,
+          "note": ""
+        },
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_5",
+      "name": "Check Policy",
+      "description": "Verify the customer's policy coverage, exclusions, and claim eligibility conditions.",
+      "actor": {
+        "id": "xg_a_0",
+        "name": "Claims Officer"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_0",
+          "name": "Process Insurance Claims",
+          "type": "Goal"
+        }
+      ],
+      "resources": [
+        {
+          "id": "xg_e_8",
+          "name": "Policy Database",
+          "relation": "Dependency",
+          "direction": "outgoing"
+        }
+      ],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 4,
+          "justification": "Much of the task can be automated by matching claim facts against policy coverage, exclusions, and eligibility rules, though ambiguous policy language or exceptional cases may still require human judgment."
+        },
+        "S": {
+          "score": 4,
+          "justification": "The main input is a policy database, which is likely structured and consistently accessible, although some policy clauses or exclusions may contain semi-structured or textual content."
+        },
+        "R": {
+          "score": 5,
+          "justification": "Policy checking is a standard and recurring step in insurance claims processing and is performed consistently across many claim instances."
+        },
+        "D": {
+          "score": 4,
+          "justification": "The task fits AI-supported retrieval and rule-based or analytical reasoning well, especially for identifying applicable coverage and exclusions, but edge cases may require domain interpretation."
+        },
+        "C": {
+          "score": 3,
+          "justification": "AI can likely support this task, but claim eligibility decisions may require human validation, auditability, and organizational oversight due to liability and customer impact."
+        },
+        "ars": 4.25,
+        "level": "High",
+        "capability": {
+          "category": "Analytical Reasoning",
+          "confidence": 85,
+          "justification": "The core task is determining whether policy terms, exclusions, and eligibility conditions apply to a claim, which requires applying rules and conditions rather than merely retrieving information."
+        },
+        "eligibility": "partially_constrained",
+        "validation": {
+          "required": true,
+          "validated": false,
+          "validatedAt": null,
+          "note": ""
+        },
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_6",
+      "name": "Assess Damage",
+      "description": "Review evidence and estimate the extent and impact of the reported damage.",
+      "actor": {
+        "id": "xg_a_0",
+        "name": "Claims Officer"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_0",
+          "name": "Process Insurance Claims",
+          "type": "Goal"
+        }
+      ],
+      "resources": [
+        {
+          "id": "xg_e_9",
+          "name": "Damage Photos",
+          "relation": "Dependency",
+          "direction": "outgoing"
+        }
+      ],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 3,
+          "justification": "AI could estimate visible damage severity and likely impact from photos, but final assessment often requires human judgment about context, causation, uncertainty, and claim implications."
+        },
+        "S": {
+          "score": 2,
+          "justification": "Damage photos and supporting evidence are largely unstructured and may vary in quality, angle, completeness, and consistency across claims."
+        },
+        "R": {
+          "score": 4,
+          "justification": "Damage assessment is a recurring activity in insurance claims and follows a broadly consistent process, even though individual cases vary."
+        },
+        "D": {
+          "score": 3,
+          "justification": "Computer vision and predictive models are well suited to identifying and estimating visible damage, but assessing full impact may require domain expertise and contextual judgment beyond model pattern recognition."
+        },
+        "C": {
+          "score": 3,
+          "justification": "AI use would likely require human validation or approval because the assessment can affect claim outcomes, liability, and customer fairness, but AI assistance is not inherently prohibited."
+        },
+        "ars": 3.0,
+        "level": "Medium",
+        "capability": {
+          "category": "Analytical Reasoning",
+          "confidence": 78,
+          "justification": "The task requires interpreting evidence, especially photos, and drawing an assessment about damage extent and impact rather than only classifying or retrieving information."
+        },
+        "eligibility": "partially_constrained",
+        "validation": {
+          "required": true,
+          "validated": false,
+          "validatedAt": null,
+          "note": ""
+        },
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_7",
+      "name": "Determine Claim Outcome",
+      "description": "Decide whether the claim should be approved, rejected, or escalated for further review.",
+      "actor": {
+        "id": "xg_a_0",
+        "name": "Claims Officer"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_0",
+          "name": "Process Insurance Claims",
+          "type": "Goal"
+        }
+      ],
+      "resources": [],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 3,
+          "justification": "The outcome can often be supported or partially produced by rules or predictive models, especially for standard claims, but final approval or rejection may still require human judgment in ambiguous, high-value, or exceptional cases."
+        },
+        "S": {
+          "score": 3,
+          "justification": "Claim outcomes rely on claim forms and policy data that may be structured, but supporting evidence, documentation, and contextual details may vary in format and completeness."
+        },
+        "R": {
+          "score": 5,
+          "justification": "Claims are processed repeatedly across many instances, and the decision categories of approve, reject, or escalate are consistent."
+        },
+        "D": {
+          "score": 4,
+          "justification": "The task maps well to classification or rules-based AI techniques, though some cases may require policy interpretation, contextual assessment, or judgment beyond model strengths."
+        },
+        "C": {
+          "score": 4,
+          "justification": "AI use for claim approval or rejection is likely subject to significant governance, explainability, fairness, auditability, and human oversight requirements due to legal and liability implications."
+        },
+        "ars": 3.75,
+        "level": "Medium",
+        "capability": {
+          "category": "Classification",
+          "confidence": 95,
+          "justification": "The task requires assigning each claim to one of a fixed set of outcome classes: approved, rejected, or escalated."
+        },
+        "eligibility": "excluded",
+        "validation": null,
+        "error": null
+      }
+    }
+  ]
+}

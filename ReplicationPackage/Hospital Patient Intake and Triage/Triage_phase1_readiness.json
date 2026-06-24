@@ -1,0 +1,630 @@
+{
+  "fileName": "Triage.xgrl",
+  "generatedAt": "2026-06-24T15:09:08.245648+00:00",
+  "tasks": [
+    {
+      "id": "xg_e_4",
+      "name": "Fill Symptom Questionnaire",
+      "description": "Report current symptoms, duration, and severity through a structured form.",
+      "actor": {
+        "id": "xg_a_0",
+        "name": "Patient"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_2",
+          "name": "Provide Health Information",
+          "type": "Goal"
+        }
+      ],
+      "resources": [],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 2,
+          "justification": "The task depends on the patient's subjective self-report of current symptoms, duration, and severity, so AI cannot fully produce the outcome without human input. AI can assist by guiding, prompting, or structuring responses."
+        },
+        "S": {
+          "score": 4,
+          "justification": "The task uses a structured form with well-defined fields such as symptoms, duration, and severity, although patient-entered descriptions may still vary."
+        },
+        "R": {
+          "score": 5,
+          "justification": "Symptom questionnaires are commonly repeated across many patients and encounters using consistent formats and workflows."
+        },
+        "D": {
+          "score": 3,
+          "justification": "AI language or classification techniques can help map patient descriptions to structured symptom fields, but the core information originates from subjective patient experience rather than AI reasoning."
+        },
+        "C": {
+          "score": 3,
+          "justification": "Use of AI involves health information privacy, accuracy, and validation concerns. AI assistance would likely require patient confirmation and organizational controls, but is not inherently prohibited."
+        },
+        "ars": 3.5,
+        "level": "Medium",
+        "capability": {
+          "category": "Classification",
+          "confidence": 72,
+          "justification": "The most relevant AI capability would be classifying or mapping reported symptoms, durations, and severities into structured questionnaire fields."
+        },
+        "eligibility": "partially_constrained",
+        "validation": {
+          "required": true,
+          "validated": false,
+          "validatedAt": null,
+          "note": ""
+        },
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_5",
+      "name": "Upload Insurance Documents",
+      "description": "Submit insurance card and identification documents for verification.",
+      "actor": {
+        "id": "xg_a_0",
+        "name": "Patient"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_2",
+          "name": "Provide Health Information",
+          "type": "Goal"
+        }
+      ],
+      "resources": [],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 4,
+          "justification": "The upload intake, document type detection, quality checks, and routing for verification can largely be automated, though the patient must still provide the documents and final verification may require review."
+        },
+        "S": {
+          "score": 3,
+          "justification": "Inputs are known document categories such as insurance cards and identification documents, but layouts, image quality, file formats, and issuer-specific fields can vary substantially."
+        },
+        "R": {
+          "score": 5,
+          "justification": "This is a common, recurring patient onboarding or health information task performed in a similar way across many patients."
+        },
+        "D": {
+          "score": 4,
+          "justification": "The task aligns well with AI strengths in computer vision, OCR, and document classification, with limited need for tacit human judgment during intake."
+        },
+        "C": {
+          "score": 3,
+          "justification": "The task involves sensitive personal, health, and identity information, so AI use would require privacy, security, auditability, and likely human validation controls, but it is not inherently prohibited."
+        },
+        "ars": 4.0,
+        "level": "High",
+        "capability": {
+          "category": "Classification",
+          "confidence": 76,
+          "justification": "The most relevant AI capability is classifying uploaded files as insurance cards or identification documents and flagging whether they appear acceptable for verification."
+        },
+        "eligibility": "partially_constrained",
+        "validation": {
+          "required": true,
+          "validated": false,
+          "validatedAt": null,
+          "note": ""
+        },
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_6",
+      "name": "Check In via Kiosk",
+      "description": "Complete self-service check-in using the lobby kiosk.",
+      "actor": {
+        "id": "xg_a_0",
+        "name": "Patient"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_3",
+          "name": "Choose Check-in Method",
+          "type": "Goal"
+        }
+      ],
+      "resources": [],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 4,
+          "justification": "The check-in outcome can largely be completed through a self-service workflow without essential human judgment, except for exceptions such as identity mismatch, missing records, or special assistance needs."
+        },
+        "S": {
+          "score": 4,
+          "justification": "Inputs are typically structured and well-defined, such as appointment details, patient identifiers, demographics, insurance information, and consent confirmations."
+        },
+        "R": {
+          "score": 5,
+          "justification": "Kiosk check-in is a frequent, standardized, and highly repeatable process across patient visits."
+        },
+        "D": {
+          "score": 2,
+          "justification": "The task is primarily procedural and rule-based rather than dependent on AI-style reasoning; AI may assist with recognition or guidance, but core completion does not strongly require AI reasoning."
+        },
+        "C": {
+          "score": 3,
+          "justification": "Use of AI would involve patient identity and protected health information, requiring privacy, security, auditability, and organizational validation, though it is not inherently prohibited."
+        },
+        "ars": 3.75,
+        "level": "Medium",
+        "capability": {
+          "category": "None",
+          "confidence": 85,
+          "justification": "The task is best characterized as a transactional self-service workflow rather than a distinct AI capability such as classification, prediction, retrieval, or generation."
+        },
+        "eligibility": "partially_constrained",
+        "validation": {
+          "required": true,
+          "validated": false,
+          "validatedAt": null,
+          "note": ""
+        },
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_7",
+      "name": "Check In via Front Desk Staff",
+      "description": "Complete check-in with the assistance of front desk personnel.",
+      "actor": {
+        "id": "xg_a_0",
+        "name": "Patient"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_3",
+          "name": "Choose Check-in Method",
+          "type": "Goal"
+        }
+      ],
+      "resources": [],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 2,
+          "justification": "The task can be partially supported through automation such as appointment lookup, form completion, and eligibility checks, but the described method depends on front desk personnel for interaction, exception handling, and confirmation."
+        },
+        "S": {
+          "score": 3,
+          "justification": "Many inputs are structured, such as appointment records, patient identifiers, and demographic or insurance fields, but patient-provided information and check-in issues may vary across cases."
+        },
+        "R": {
+          "score": 5,
+          "justification": "Front desk check-in is a routine, frequently repeated process performed consistently across many patient visits."
+        },
+        "D": {
+          "score": 3,
+          "justification": "AI can support structured lookup, validation, and guided interaction, but some situations require contextual service judgment, clarification, and escalation by staff."
+        },
+        "C": {
+          "score": 3,
+          "justification": "AI use would involve protected patient information and identity-related workflows, requiring privacy safeguards, validation, auditability, and likely human oversight, but it is not inherently prohibited."
+        },
+        "ars": 3.25,
+        "level": "Medium",
+        "capability": {
+          "category": "Retrieval",
+          "confidence": 70,
+          "justification": "The most relevant AI capability is retrieving appointment, patient, and registration information to support the check-in process, though the overall task is broader than retrieval alone."
+        },
+        "eligibility": "partially_constrained",
+        "validation": {
+          "required": true,
+          "validated": false,
+          "validatedAt": null,
+          "note": ""
+        },
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_12",
+      "name": "Review Symptom Questionnaire",
+      "description": "Read and summarize the patient's reported symptoms.",
+      "actor": {
+        "id": "xg_a_1",
+        "name": "Triage Nurse"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_10",
+          "name": "Determine Patient Priority",
+          "type": "Goal"
+        }
+      ],
+      "resources": [
+        {
+          "id": "xg_e_8",
+          "name": "Symptom Data",
+          "relation": "Dependency",
+          "direction": "outgoing"
+        }
+      ],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 4,
+          "justification": "The task is primarily reading patient-reported symptom information and producing a summary, which can often be automated, though clinical review may still be needed to catch nuance or safety-critical omissions."
+        },
+        "S": {
+          "score": 3,
+          "justification": "A symptom questionnaire provides some structure, but patient-reported symptoms may include free-text, variable wording, incomplete answers, or inconsistent detail."
+        },
+        "R": {
+          "score": 5,
+          "justification": "Reviewing and summarizing symptom questionnaires is a common and consistently repeated triage activity across patients."
+        },
+        "D": {
+          "score": 4,
+          "justification": "The task aligns well with language-based AI summarization, although recognizing clinically salient details may require domain-aware validation."
+        },
+        "C": {
+          "score": 3,
+          "justification": "AI use is not inherently prohibited, but because the output may influence triage decisions, human review and validation would likely be required, along with privacy and clinical governance controls."
+        },
+        "ars": 4.0,
+        "level": "High",
+        "capability": {
+          "category": "Summarization",
+          "confidence": 95,
+          "justification": "The task explicitly involves reading patient-reported symptoms and summarizing them for triage use."
+        },
+        "eligibility": "partially_constrained",
+        "validation": {
+          "required": true,
+          "validated": false,
+          "validatedAt": null,
+          "note": ""
+        },
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_13",
+      "name": "Measure Vital Signs",
+      "description": "Record blood pressure, heart rate, temperature, and oxygen saturation.",
+      "actor": {
+        "id": "xg_a_1",
+        "name": "Triage Nurse"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_10",
+          "name": "Determine Patient Priority",
+          "type": "Goal"
+        }
+      ],
+      "resources": [],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 4,
+          "justification": "The outcome is primarily objective measurement and recording of numeric values, which can largely be produced by automated vital-sign devices and electronic documentation, though human involvement may still be needed for patient positioning, probe placement, and confirming questionable readings."
+        },
+        "S": {
+          "score": 5,
+          "justification": "The inputs and outputs are highly structured, consisting of well-defined physiological measurements such as blood pressure, heart rate, temperature, and oxygen saturation."
+        },
+        "R": {
+          "score": 5,
+          "justification": "Measuring vital signs is a highly routine and consistently repeated triage activity performed across many patient encounters."
+        },
+        "D": {
+          "score": 2,
+          "justification": "The task has minimal reasoning demands and is primarily sensor-based measurement and recording rather than a strong fit for language, vision, predictive, or analytical AI reasoning."
+        },
+        "C": {
+          "score": 3,
+          "justification": "AI use would likely require validation, clinical governance, and human review of abnormal or questionable readings because incorrect measurements could affect triage decisions, though AI is not inherently prohibited for this task."
+        },
+        "ars": 4.0,
+        "level": "High",
+        "capability": {
+          "category": "None",
+          "confidence": 85,
+          "justification": "The task is best characterized as physiological measurement and data capture rather than classification, prediction, recommendation, retrieval, summarization, generation, or analytical reasoning."
+        },
+        "eligibility": "partially_constrained",
+        "validation": {
+          "required": true,
+          "validated": false,
+          "validatedAt": null,
+          "note": ""
+        },
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_14",
+      "name": "Assign Triage Level",
+      "description": "Determine the patient's acuity level based on symptoms and vital signs.",
+      "actor": {
+        "id": "xg_a_1",
+        "name": "Triage Nurse"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_10",
+          "name": "Determine Patient Priority",
+          "type": "Goal"
+        }
+      ],
+      "resources": [
+        {
+          "id": "xg_e_15",
+          "name": "Vital Signs Record",
+          "relation": "Dependency",
+          "direction": "outgoing"
+        }
+      ],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 3,
+          "justification": "The task can be partially automated using triage protocols, symptom patterns, and vital signs, but final acuity assignment typically requires clinical judgment and awareness of contextual factors."
+        },
+        "S": {
+          "score": 3,
+          "justification": "Vital signs are structured and consistently recorded, but symptom descriptions may be variable, incomplete, or expressed in semi-structured/free-text form."
+        },
+        "R": {
+          "score": 5,
+          "justification": "Triage level assignment is performed frequently and follows relatively consistent workflows across patient encounters."
+        },
+        "D": {
+          "score": 4,
+          "justification": "The task maps well to classification or decision-support models using clinical inputs, though some cases require nuanced clinical interpretation beyond model outputs."
+        },
+        "C": {
+          "score": 4,
+          "justification": "AI use for triage acuity is subject to significant clinical governance, liability, validation, and likely mandatory human oversight because it can directly affect care prioritization."
+        },
+        "ars": 3.75,
+        "level": "Medium",
+        "capability": {
+          "category": "Classification",
+          "confidence": 95,
+          "justification": "The task involves assigning a patient to one of a set of predefined acuity or triage levels based on input features such as symptoms and vital signs."
+        },
+        "eligibility": "excluded",
+        "validation": null,
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_20",
+      "name": "Route to Emergency Department",
+      "description": "Direct the patient immediately to emergency care.",
+      "actor": {
+        "id": "xg_a_2",
+        "name": "Care Coordinator"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_19",
+          "name": "Determine Care Pathway",
+          "type": "Goal"
+        }
+      ],
+      "resources": [],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 2,
+          "justification": "The task could be partially supported by protocol-based rules or AI triage logic, but directing a patient to emergency care is safety-critical and typically requires human clinical or care-coordination judgment."
+        },
+        "S": {
+          "score": 2,
+          "justification": "No specific inputs are defined, and the relevant information may include variable patient symptoms, history, context, and urgency indicators that may be inconsistently formatted."
+        },
+        "R": {
+          "score": 4,
+          "justification": "Routing patients to emergency care is a recurring triage activity and is often performed using consistent escalation criteria or red-flag indicators."
+        },
+        "D": {
+          "score": 3,
+          "justification": "AI can help identify emergency indicators and match cases to triage protocols, but the reasoning may require contextual clinical judgment and risk assessment beyond straightforward model inference."
+        },
+        "C": {
+          "score": 4,
+          "justification": "Using AI to direct patients to emergency care is likely subject to significant organizational governance, liability concerns, clinical safety requirements, and mandatory human oversight."
+        },
+        "ars": 2.75,
+        "level": "Medium",
+        "capability": {
+          "category": "Recommendation",
+          "confidence": 85,
+          "justification": "The task involves recommending or directing an immediate care pathway, specifically emergency department routing, based on patient condition or triage criteria."
+        },
+        "eligibility": "excluded",
+        "validation": null,
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_21",
+      "name": "Route to Urgent Care Queue",
+      "description": "Place the patient in the urgent care queue.",
+      "actor": {
+        "id": "xg_a_2",
+        "name": "Care Coordinator"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_19",
+          "name": "Determine Care Pathway",
+          "type": "Goal"
+        }
+      ],
+      "resources": [
+        {
+          "id": "xg_e_16",
+          "name": "Triage Assessment",
+          "relation": "Dependency",
+          "direction": "outgoing"
+        }
+      ],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 4,
+          "justification": "The queue placement can likely be automated when the triage assessment contains clear criteria indicating urgent care eligibility, though exceptions and safety-sensitive cases may still require human oversight."
+        },
+        "S": {
+          "score": 3,
+          "justification": "The input is a triage assessment, which may include structured fields but can also contain clinical notes or variable formats depending on how the assessment is captured."
+        },
+        "R": {
+          "score": 5,
+          "justification": "Routing patients to care queues is a common, repeated workflow performed consistently across many patient encounters."
+        },
+        "D": {
+          "score": 4,
+          "justification": "The task aligns well with classification or rules-based AI if it maps triage assessment findings to an urgent care queue, though ambiguous clinical cases may require human judgment."
+        },
+        "C": {
+          "score": 3,
+          "justification": "AI use would likely require validation, auditability, and human review because incorrect routing could affect patient safety and create liability, but it is not inherently prohibited."
+        },
+        "ars": 4.0,
+        "level": "High",
+        "capability": {
+          "category": "Classification",
+          "confidence": 88,
+          "justification": "The task is best characterized as assigning a patient to a specific queue category based on triage assessment information."
+        },
+        "eligibility": "partially_constrained",
+        "validation": {
+          "required": true,
+          "validated": false,
+          "validatedAt": null,
+          "note": ""
+        },
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_22",
+      "name": "Schedule Routine Appointment",
+      "description": "Book a routine follow-up appointment for non-urgent cases.",
+      "actor": {
+        "id": "xg_a_2",
+        "name": "Care Coordinator"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_19",
+          "name": "Determine Care Pathway",
+          "type": "Goal"
+        }
+      ],
+      "resources": [],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 4,
+          "justification": "Routine non-urgent appointment booking can largely be automated using availability, patient preferences, provider rules, and follow-up timing, with human involvement mainly for exceptions or conflicts."
+        },
+        "S": {
+          "score": 3,
+          "justification": "Core scheduling inputs such as patient identity, appointment type, provider availability, and preferred times are typically structured, but the task description does not specify standardized inputs and some information may come from notes or communications."
+        },
+        "R": {
+          "score": 5,
+          "justification": "Routine follow-up scheduling is a frequent, standardized administrative task performed consistently across many cases."
+        },
+        "D": {
+          "score": 4,
+          "justification": "The reasoning mainly involves matching appointment needs to available slots and scheduling rules, which aligns well with rule-based automation or AI-assisted recommendation rather than complex tacit clinical judgment."
+        },
+        "C": {
+          "score": 2,
+          "justification": "AI use would need to respect privacy, security, and organizational scheduling policies, but routine appointment booking does not typically require mandatory human approval or face strong AI-specific legal restrictions."
+        },
+        "ars": 4.0,
+        "level": "High",
+        "capability": {
+          "category": "Recommendation",
+          "confidence": 78,
+          "justification": "The task is best characterized as recommending or selecting an appropriate appointment slot based on availability, appointment type, and patient or provider constraints."
+        },
+        "eligibility": "carry_forward",
+        "validation": null,
+        "error": null
+      }
+    },
+    {
+      "id": "xg_e_23",
+      "name": "Notify Patient of Assignment",
+      "description": "Inform the patient of their assigned care pathway and expected wait.",
+      "actor": {
+        "id": "xg_a_2",
+        "name": "Care Coordinator"
+      },
+      "parentGoals": [
+        {
+          "id": "xg_e_17",
+          "name": "Assign Patient to Care Pathway",
+          "type": "Goal"
+        }
+      ],
+      "resources": [
+        {
+          "id": "xg_e_24",
+          "name": "Care Pathway Decision",
+          "relation": "Dependency",
+          "direction": "outgoing"
+        },
+        {
+          "id": "xg_e_9",
+          "name": "Patient Contact Info",
+          "relation": "Dependency",
+          "direction": "outgoing"
+        }
+      ],
+      "readiness": {
+        "status": "done",
+        "A": {
+          "score": 4,
+          "justification": "The notification can largely be produced and sent automatically once the care pathway decision, expected wait, and contact information are available, though exceptions or sensitive cases may still require human handling."
+        },
+        "S": {
+          "score": 4,
+          "justification": "The key inputs are likely structured or semi-structured, including the assigned care pathway, expected wait, and patient contact details, though formatting may vary across systems."
+        },
+        "R": {
+          "score": 5,
+          "justification": "This is a routine, recurring communication task performed consistently whenever a patient is assigned to a care pathway."
+        },
+        "D": {
+          "score": 4,
+          "justification": "The reasoning demand is well suited to AI-supported language generation or template-based communication, with limited need for tacit clinical judgment if the assignment decision is already made."
+        },
+        "C": {
+          "score": 3,
+          "justification": "AI use would likely require validation, privacy safeguards, and compliance with organizational policies for patient communications involving health information, but it is not inherently prohibited."
+        },
+        "ars": 4.25,
+        "level": "High",
+        "capability": {
+          "category": "Generation",
+          "confidence": 82,
+          "justification": "The task primarily involves creating a patient-facing notification message using existing assignment and wait-time information."
+        },
+        "eligibility": "partially_constrained",
+        "validation": {
+          "required": true,
+          "validated": false,
+          "validatedAt": null,
+          "note": ""
+        },
+        "error": null
+      }
+    }
+  ]
+}

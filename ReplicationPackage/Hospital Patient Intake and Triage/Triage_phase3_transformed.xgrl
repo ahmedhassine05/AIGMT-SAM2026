@@ -1,0 +1,181 @@
+grl Triage {
+ actor Patient {
+    name = "Patient";
+    goal G1 { name = "Complete Intake Process"; importance = high; decompositionType = and; }
+    softGoal SG1 { name = "Minimize Wait Time"; }
+
+    softGoal SG_Patient_Fairness { name = "Fairness"; }
+    softGoal SG_Patient_Explainability { name = "Explainability"; }
+    softGoal SG_Patient_Privacy { name = "Privacy"; }
+    softGoal SG_Patient_Robustness { name = "Robustness"; }
+
+    goal G1a { name = "Provide Health Information"; decompositionType = and; }
+    goal G1b { name = "Choose Check-in Method"; decompositionType = or; }
+
+    task T1 { name = "AI-Assisted Symptom Classification";
+        description = "Use AI to classify the patient’s reported symptoms, duration, and severity into structured symptom categories and severity levels, supporting more consistent health information capture while the patient provides or confirms the information."; }
+    task T2 { name = "AI-Assisted Insurance Document Upload and Classification";
+        description = "Patient submits insurance card and identification document images, and an AI service classifies each uploaded document by type, checks whether required document categories are present, and flags unclear, incomplete, or mismatched submissions for verification."; }
+    task T3 { name = "Check In via Kiosk";
+        description = "Complete self-service check-in using the lobby kiosk."; }
+    task T4 { name = "Check In with AI-Assisted Front Desk Retrieval";
+        description = "Complete patient check-in with AI assistance that retrieves relevant appointment, identity, eligibility, insurance, and check-in policy information from approved systems to support front desk personnel and reduce manual lookup during the check-in process."; }
+
+    resource SymptomData { name = "Symptom Data"; }
+    resource PatientContactInfo { name = "Patient Contact Info"; }
+    resource SymptomClassificationModel {
+        name = "Symptom Classification Model";
+        description = "An AI model that maps patient-entered symptom descriptions, durations, and severity indicators to standardized symptom categories and severity classifications."; }
+    resource SymptomTaxonomy {
+        name = "Symptom Taxonomy";
+        description = "A standardized set of symptom categories, severity levels, and duration ranges used by the AI model to classify patient-provided information consistently."; }
+    resource AIDocumentClassificationModel {
+        name = "AI Document Classification Model";
+        description = "A trained model that classifies uploaded insurance cards and identification documents and detects missing, unreadable, or potentially incorrect document submissions."; }
+    resource AIAssistedCheckInRetrievalSystem {
+        name = "AI-Assisted Check-In Retrieval System";
+        description = "A retrieval-enabled AI capability integrated with approved appointment, patient registration, insurance, and check-in policy repositories to surface relevant information for the check-in interaction."; }
+    resource IndexedCheckInKnowledgeAndPatientDataSources {
+        name = "Indexed Check-In Knowledge and Patient Data Sources";
+        description = "Searchable, access-controlled indexes or connectors for appointment records, registration data, insurance details, and organizational check-in procedures required by the AI retrieval capability."; }
+
+    G1 decomposedBy G1a, G1b;
+    G1a decomposedBy T1, T2;
+    G1b decomposedBy T3, T4;
+
+    T1 dependsOn SymptomClassificationModel;
+    T1 dependsOn SymptomTaxonomy;
+    T2 dependsOn AIDocumentClassificationModel;
+    T4 dependsOn AIAssistedCheckInRetrievalSystem;
+    T4 dependsOn IndexedCheckInKnowledgeAndPatientDataSources;
+
+    T1 contributesTo SG1 {hurt;};
+    T3 contributesTo SG1 {help;};
+
+    // Justification: Standardized AI symptom classification can support more consistent categorization across patient groups when governed for demographic and presentation variation.
+    T1 contributesTo SG_Patient_Fairness {help;};
+    // Justification: Structured symptom categories and severity levels can help patients and staff understand how reported information was interpreted.
+    T1 contributesTo SG_Patient_Explainability {help;};
+
+    // Justification: Automated document classification may unfairly delay patients if performance differs by document format, issuer, language, or image quality.
+    T2 contributesTo SG_Patient_Fairness {hurt;};
+    // Justification: Flagging unclear, incomplete, or mismatched submissions can provide understandable reasons for verification.
+    T2 contributesTo SG_Patient_Explainability {help;};
+
+    // Justification: Retrieval of identifiable appointment, identity, eligibility, and insurance information increases privacy exposure and requires strict controls.
+    T4 contributesTo SG_Patient_Privacy {hurt;};
+    // Justification: Surfacing approved records and policies can help front desk personnel explain which information supported the check-in outcome.
+    T4 contributesTo SG_Patient_Explainability {help;};
+    // Justification: AI retrieval may return incomplete or irrelevant results when patient details are ambiguous or connected systems are unavailable.
+    T4 contributesTo SG_Patient_Robustness {hurt;};
+ }
+
+ actor TriageNurse {
+    name = "Triage Nurse";
+    goal G2 { name = "Determine Patient Priority"; importance = high; decompositionType = and; }
+    softGoal SG2 { name = "Ensure Patient Safety"; }
+
+    softGoal SG_TriageNurse_Accountability { name = "Accountability"; }
+    softGoal SG_TriageNurse_Explainability { name = "Explainability"; }
+    softGoal SG_TriageNurse_Robustness { name = "Robustness"; }
+
+    task T5 { name = "AI-Assisted Review of Symptom Questionnaire";
+        description = "Use generative AI to read the patient's reported symptom data and produce a concise, structured summary of key symptoms, severity indicators, duration, red flags, and uncertainties for the triage nurse to review when determining patient priority."; }
+    task T6 { name = "Measure Vital Signs";
+        description = "Record blood pressure, heart rate, temperature, and oxygen saturation."; }
+    task T7 { name = "Assign Triage Level";
+        description = "Determine the patient's acuity level based on symptoms and vital signs."; }
+
+    resource VitalSignsRecord { name = "Vital Signs Record"; }
+    resource TriageAssessment { name = "Triage Assessment"; }
+    resource AIGeneratedSymptomSummary {
+        name = "AI-Generated Symptom Summary";
+        description = "A structured draft summary of the patient's reported symptoms, including salient findings and potential urgency indicators, generated from the submitted symptom questionnaire for nurse review."; }
+
+    G2 decomposedBy T5, T6, T7;
+
+    T5 dependsOn AIGeneratedSymptomSummary;
+    T7 dependsOn VitalSignsRecord;
+
+    T7 contributesTo SG2 {help;};
+
+    // Justification: The triage nurse remains responsible for reviewing, validating, and acting on the AI-generated symptom summary.
+    T5 contributesTo SG_TriageNurse_Accountability {help;};
+    // Justification: A structured summary can expose salient symptoms, severity indicators, red flags, and uncertainties for nurse review.
+    T5 contributesTo SG_TriageNurse_Explainability {help;};
+    // Justification: Generative summarization may omit, misinterpret, or hallucinate symptoms when questionnaire responses are incomplete or unusual.
+    T5 contributesTo SG_TriageNurse_Robustness {hurt;};
+ }
+
+ actor CareCoordinator {
+    name = "Care Coordinator";
+    goal G3 { name = "Assign Patient to Care Pathway"; importance = high; decompositionType = and; }
+    softGoal SG3 { name = "Optimize Resource Utilization"; }
+
+    softGoal SG_CareCoordinator_Fairness { name = "Fairness"; }
+    softGoal SG_CareCoordinator_Explainability { name = "Explainability"; }
+    softGoal SG_CareCoordinator_Robustness { name = "Robustness"; }
+    softGoal SG_CareCoordinator_Accountability { name = "Accountability"; }
+
+    goal G3a { name = "Determine Care Pathway"; decompositionType = or; }
+
+    task T8 { name = "Route to Emergency Department";
+        description = "Direct the patient immediately to emergency care."; }
+    task T9 { name = "AI-Assisted Routing to Urgent Care Queue";
+        description = "Use an AI classification capability to analyze the triage assessment and determine whether the patient should be placed in the urgent care queue, supporting timely and consistent care pathway determination by the Care Coordinator."; }
+    task T10 { name = "Recommend Routine Appointment Schedule";
+        description = "Use an AI recommendation capability to suggest appropriate routine follow-up appointment options for non-urgent cases based on patient context, clinical follow-up needs, provider availability, scheduling constraints, and historical appointment patterns, replacing reliance on predefined business rules."; }
+    task T11 { name = "Generate and Send AI-Assisted Patient Assignment Notification";
+        description = "Use generative AI to draft a clear, patient-friendly notification informing the patient of their assigned care pathway and expected wait time, using the approved care pathway decision and patient contact information. The Care Coordinator reviews and confirms the message before it is sent."; }
+
+    resource CarePathwayDecision { name = "Care Pathway Decision"; }
+    resource UrgentCareRoutingClassificationModel {
+        name = "Urgent Care Routing Classification Model";
+        description = "An AI model trained and configured to classify patient triage information into routing categories, including placement in the urgent care queue."; }
+    resource AppointmentRecommendationModel {
+        name = "Appointment Recommendation Model";
+        description = "AI model that generates recommended routine follow-up appointment timing and slot options for non-urgent cases."; }
+    resource PatientAndSchedulingDataInterface {
+        name = "Patient and Scheduling Data Interface";
+        description = "Data access capability that provides the AI model with relevant patient follow-up context, provider availability, appointment slots, and scheduling constraints."; }
+    resource PatientNotificationTemplateAndCommunicationGuidelines {
+        name = "Patient Notification Template and Communication Guidelines";
+        description = "Approved messaging structure, tone, required content, and safety constraints used to guide AI-generated patient communications."; }
+
+    G3 decomposedBy G3a, T11;
+    G3a decomposedBy T8, T9, T10;
+
+    T9 dependsOn UrgentCareRoutingClassificationModel;
+    T10 dependsOn AppointmentRecommendationModel;
+    T10 dependsOn PatientAndSchedulingDataInterface;
+    T11 dependsOn CarePathwayDecision;
+    T11 dependsOn PatientNotificationTemplateAndCommunicationGuidelines;
+
+    T9 contributesTo SG3 {help;};
+    T10 contributesTo SG3 {help;};
+
+    // Justification: AI routing classification may introduce biased urgent care placement if model behavior differs across patient groups.
+    T9 contributesTo SG_CareCoordinator_Fairness {hurt;};
+    // Justification: AI classification recommendations may be difficult to justify unless the basis for the routing recommendation is made understandable.
+    T9 contributesTo SG_CareCoordinator_Explainability {hurt;};
+
+    // Justification: AI appointment recommendations may disadvantage patients if sensitive characteristics or irrelevant constraints influence suggested slots.
+    T10 contributesTo SG_CareCoordinator_Fairness {hurt;};
+    // Justification: Recommendation logic may be opaque unless key factors such as follow-up interval, availability, and patient constraints are exposed.
+    T10 contributesTo SG_CareCoordinator_Explainability {hurt;};
+    // Justification: Recommendations may become unsafe or inappropriate when schedules change, data is incomplete, or availability is limited.
+    T10 contributesTo SG_CareCoordinator_Robustness {hurt;};
+
+    // Justification: The Care Coordinator reviews and confirms the AI-generated message before it is sent, preserving responsibility for the communication.
+    T11 contributesTo SG_CareCoordinator_Accountability {help;};
+    // Justification: A clear, patient-friendly notification helps the patient understand the assigned pathway and expected wait.
+    T11 contributesTo SG_CareCoordinator_Explainability {help;};
+    // Justification: Generative notification drafting may invent wait times or pathway details if it does not reliably use the approved decision and contact data.
+    T11 contributesTo SG_CareCoordinator_Robustness {hurt;};
+ }
+
+ // -- Cross-actor dependencies (qualified by owning actor) --
+ TriageNurse.T5 dependsOn Patient.SymptomData;
+ CareCoordinator.T9 dependsOn TriageNurse.TriageAssessment;
+ CareCoordinator.T11 dependsOn Patient.PatientContactInfo;
+}

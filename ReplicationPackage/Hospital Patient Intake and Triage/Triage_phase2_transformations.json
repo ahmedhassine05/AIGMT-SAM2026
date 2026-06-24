@@ -1,0 +1,250 @@
+{
+  "fileName": "Triage.xgrl",
+  "generatedAt": "2026-06-24T15:10:17.159019+00:00",
+  "transformations": [
+    {
+      "taskId": "xg_e_4",
+      "taskName": "Fill Symptom Questionnaire",
+      "pattern": "P4",
+      "requiresValidation": true,
+      "aiTask": {
+        "name": "AI-Assisted Symptom Classification",
+        "description": "Use AI to classify the patient\u2019s reported symptoms, duration, and severity into structured symptom categories and severity levels, supporting more consistent health information capture while the patient provides or confirms the information."
+      },
+      "resources": [
+        {
+          "name": "Symptom Classification Model",
+          "description": "An AI model that maps patient-entered symptom descriptions, durations, and severity indicators to standardized symptom categories and severity classifications."
+        },
+        {
+          "name": "Symptom Taxonomy",
+          "description": "A standardized set of symptom categories, severity levels, and duration ranges used by the AI model to classify patient-provided information consistently."
+        }
+      ],
+      "resourceMapping": [],
+      "governance": [
+        {
+          "requirement": "Fairness",
+          "justification": "The AI classification should perform consistently across different patient demographics, language styles, health literacy levels, and symptom presentation patterns to avoid biased symptom categorization."
+        },
+        {
+          "requirement": "Explainability",
+          "justification": "Patients and healthcare staff should be able to understand why symptoms were assigned to particular categories or severity levels, especially when classifications may influence subsequent care decisions."
+        }
+      ]
+    },
+    {
+      "taskId": "xg_e_5",
+      "taskName": "Upload Insurance Documents",
+      "pattern": "P4",
+      "requiresValidation": true,
+      "aiTask": {
+        "name": "AI-Assisted Insurance Document Upload and Classification",
+        "description": "Patient submits insurance card and identification document images, and an AI service classifies each uploaded document by type, checks whether required document categories are present, and flags unclear, incomplete, or mismatched submissions for verification."
+      },
+      "resources": [
+        {
+          "name": "AI Document Classification Model",
+          "description": "A trained model that classifies uploaded insurance cards and identification documents and detects missing, unreadable, or potentially incorrect document submissions."
+        }
+      ],
+      "resourceMapping": [],
+      "governance": [
+        {
+          "requirement": "Fairness",
+          "justification": "The AI classification should perform consistently across different patient populations, document formats, languages, issuers, and image qualities to avoid unfairly delaying or rejecting certain patients' submissions."
+        },
+        {
+          "requirement": "Explainability",
+          "justification": "When documents are flagged, rejected, or routed for manual review, the system should provide understandable reasons such as unreadable image, missing document side, unsupported document type, or classification uncertainty."
+        }
+      ]
+    },
+    {
+      "taskId": "xg_e_7",
+      "taskName": "Check In via Front Desk Staff",
+      "pattern": "P3",
+      "requiresValidation": true,
+      "aiTask": {
+        "name": "Check In with AI-Assisted Front Desk Retrieval",
+        "description": "Complete patient check-in with AI assistance that retrieves relevant appointment, identity, eligibility, insurance, and check-in policy information from approved systems to support front desk personnel and reduce manual lookup during the check-in process."
+      },
+      "resources": [
+        {
+          "name": "AI-Assisted Check-In Retrieval System",
+          "description": "A retrieval-enabled AI capability integrated with approved appointment, patient registration, insurance, and check-in policy repositories to surface relevant information for the check-in interaction."
+        },
+        {
+          "name": "Indexed Check-In Knowledge and Patient Data Sources",
+          "description": "Searchable, access-controlled indexes or connectors for appointment records, registration data, insurance details, and organizational check-in procedures required by the AI retrieval capability."
+        }
+      ],
+      "resourceMapping": [],
+      "governance": [
+        {
+          "requirement": "Privacy",
+          "justification": "The task involves retrieval of patient-identifiable and potentially health-related information, requiring strict access control, data minimization, and protection against unauthorized disclosure."
+        },
+        {
+          "requirement": "Explainability",
+          "justification": "Front desk personnel and patients may need to understand which records or policies were retrieved and why they are relevant to the check-in outcome."
+        },
+        {
+          "requirement": "Robustness",
+          "justification": "The retrieval capability must reliably return accurate, current, and relevant information despite ambiguous patient details, incomplete records, or system connectivity issues."
+        }
+      ]
+    },
+    {
+      "taskId": "xg_e_12",
+      "taskName": "Review Symptom Questionnaire",
+      "pattern": "P5",
+      "requiresValidation": true,
+      "aiTask": {
+        "name": "AI-Assisted Review of Symptom Questionnaire",
+        "description": "Use generative AI to read the patient's reported symptom data and produce a concise, structured summary of key symptoms, severity indicators, duration, red flags, and uncertainties for the triage nurse to review when determining patient priority."
+      },
+      "resources": [
+        {
+          "name": "AI-Generated Symptom Summary",
+          "description": "A structured draft summary of the patient's reported symptoms, including salient findings and potential urgency indicators, generated from the submitted symptom questionnaire for nurse review."
+        }
+      ],
+      "resourceMapping": [
+        {
+          "resourceId": "xg_e_8",
+          "originalName": "Symptom Data",
+          "decision": "retain",
+          "rationale": "Symptom Data remains the required source input for the AI-assisted summarization task; the AI summary should be derived from, and traceable to, the patient's reported symptoms."
+        }
+      ],
+      "governance": [
+        {
+          "requirement": "Accountability",
+          "justification": "The triage nurse must remain responsible for reviewing, validating, and acting on the AI-generated summary before using it to support patient priority decisions."
+        },
+        {
+          "requirement": "Explainability",
+          "justification": "The AI-generated summary should make clear which reported symptoms and questionnaire entries support the summarized findings, especially for urgency indicators or ambiguous statements."
+        },
+        {
+          "requirement": "Robustness",
+          "justification": "The summarization should reliably handle incomplete, inconsistent, or unusually phrased patient responses while minimizing omissions, misinterpretations, and hallucinated symptoms."
+        }
+      ]
+    },
+    {
+      "taskId": "xg_e_21",
+      "taskName": "Route to Urgent Care Queue",
+      "pattern": "P4",
+      "requiresValidation": true,
+      "aiTask": {
+        "name": "AI-Assisted Routing to Urgent Care Queue",
+        "description": "Use an AI classification capability to analyze the triage assessment and determine whether the patient should be placed in the urgent care queue, supporting timely and consistent care pathway determination by the Care Coordinator."
+      },
+      "resources": [
+        {
+          "name": "Urgent Care Routing Classification Model",
+          "description": "An AI model trained and configured to classify patient triage information into routing categories, including placement in the urgent care queue."
+        }
+      ],
+      "resourceMapping": [
+        {
+          "resourceId": "xg_e_16",
+          "originalName": "Triage Assessment",
+          "decision": "retain",
+          "rationale": "The triage assessment remains a required input for the AI classification task, providing the clinical and contextual information needed to determine appropriate urgent care routing."
+        }
+      ],
+      "governance": [
+        {
+          "requirement": "Fairness",
+          "justification": "The AI classification should avoid biased routing decisions across patient groups so that access to urgent care is based on clinical need rather than protected or irrelevant characteristics."
+        },
+        {
+          "requirement": "Explainability",
+          "justification": "The Care Coordinator needs an understandable basis for the AI routing recommendation to support review, accountability, and appropriate patient placement decisions."
+        }
+      ]
+    },
+    {
+      "taskId": "xg_e_22",
+      "taskName": "Schedule Routine Appointment",
+      "pattern": "P2",
+      "requiresValidation": false,
+      "aiTask": {
+        "name": "Recommend Routine Appointment Schedule",
+        "description": "Use an AI recommendation capability to suggest appropriate routine follow-up appointment options for non-urgent cases based on patient context, clinical follow-up needs, provider availability, scheduling constraints, and historical appointment patterns, replacing reliance on predefined business rules."
+      },
+      "resources": [
+        {
+          "name": "Appointment Recommendation Model",
+          "description": "AI model that generates recommended routine follow-up appointment timing and slot options for non-urgent cases."
+        },
+        {
+          "name": "Patient and Scheduling Data Interface",
+          "description": "Data access capability that provides the AI model with relevant patient follow-up context, provider availability, appointment slots, and scheduling constraints."
+        }
+      ],
+      "resourceMapping": [],
+      "governance": [
+        {
+          "requirement": "Fairness",
+          "justification": "Appointment recommendations should not disadvantage patients based on protected or sensitive characteristics, availability constraints, language, disability, location, or other factors unrelated to clinical and scheduling need."
+        },
+        {
+          "requirement": "Explainability",
+          "justification": "The Care Coordinator should be able to understand why a specific appointment option was recommended, including key factors such as follow-up interval, availability, and patient constraints."
+        },
+        {
+          "requirement": "Robustness",
+          "justification": "The recommendation must remain reliable when schedules change, data is incomplete, or appointment availability is limited, and should avoid unsafe or inappropriate scheduling suggestions."
+        }
+      ]
+    },
+    {
+      "taskId": "xg_e_23",
+      "taskName": "Notify Patient of Assignment",
+      "pattern": "P5",
+      "requiresValidation": true,
+      "aiTask": {
+        "name": "Generate and Send AI-Assisted Patient Assignment Notification",
+        "description": "Use generative AI to draft a clear, patient-friendly notification informing the patient of their assigned care pathway and expected wait time, using the approved care pathway decision and patient contact information. The Care Coordinator reviews and confirms the message before it is sent."
+      },
+      "resources": [
+        {
+          "name": "Patient Notification Template and Communication Guidelines",
+          "description": "Approved messaging structure, tone, required content, and safety constraints used to guide AI-generated patient communications."
+        }
+      ],
+      "resourceMapping": [
+        {
+          "resourceId": "xg_e_24",
+          "originalName": "Care Pathway Decision",
+          "decision": "retain",
+          "rationale": "The Care Pathway Decision remains the authoritative source for the assigned pathway and expected wait details that the AI must communicate."
+        },
+        {
+          "resourceId": "xg_e_9",
+          "originalName": "Patient Contact Info",
+          "decision": "retain",
+          "rationale": "Patient Contact Info is still required to address and deliver the notification through the appropriate communication channel."
+        }
+      ],
+      "governance": [
+        {
+          "requirement": "Accountability",
+          "justification": "The Care Coordinator must remain responsible for reviewing, approving, and sending the AI-generated notification to ensure correctness and appropriateness."
+        },
+        {
+          "requirement": "Explainability",
+          "justification": "The notification should clearly state the assigned care pathway and expected wait in understandable language so the patient can understand the outcome."
+        },
+        {
+          "requirement": "Robustness",
+          "justification": "The AI-assisted process must reliably use the provided decision and contact data, avoid inventing wait times or pathway details, and handle missing or ambiguous information safely."
+        }
+      ]
+    }
+  ]
+}
