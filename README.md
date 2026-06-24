@@ -1,4 +1,8 @@
 # GRL AIGMT
+
+[![Paper](https://img.shields.io/badge/Paper-SAM2026-4A90D9?style=flat-square&logo=academia&logoColor=white)](https://www.scitepress.org/publishedPapers/2026/150140/pdf/)
+[![LLM](https://img.shields.io/badge/LLM-ChatGPT%205.5-412991?style=flat-square&logo=openai&logoColor=white)](https://openai.com/)
+
 Transforms a `.xgrl` / TGRL model file into an AI-enabled TGRL specification across three phases:
 Phase 1 — AI Readiness Assessment, Phase 2 — AI Transformation Patterns, Phase 3 — LLM-Based TGRL Transformation.
 
